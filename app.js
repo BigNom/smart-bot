@@ -27,8 +27,6 @@ if (!config.SERVER_URL) { //used for ink to static files
 	throw new Error('missing SERVER_URL');
 }
 
-
-
 app.set('port', (process.env.PORT || 5000))
 
 //verify request came from facebook
@@ -46,9 +44,6 @@ app.use(bodyParser.urlencoded({
 
 // Process application/json
 app.use(bodyParser.json())
-
-
-
 
 const apiAiService = apiai(config.API_AI_CLIENT_ACCESS_TOKEN, {
 	language: "en",
@@ -82,8 +77,6 @@ app.get('/webhook/', function (req, res) {
 app.post('/webhook/', function (req, res) {
 	var data = req.body;
 	console.log(JSON.stringify(data));
-
-
 
 	// Make sure this is a page subscription
 	if (data.object == 'page') {
@@ -119,17 +112,11 @@ app.post('/webhook/', function (req, res) {
 	}
 });
 
-
-
-
-
 function receivedMessage(event) {
-
 	var senderID = event.sender.id;
 	var recipientID = event.recipient.id;
 	var timeOfMessage = event.timestamp;
 	var message = event.message;
-
 	if (!sessionIds.has(senderID)) {
 		sessionIds.set(senderID, uuid.v1());
 	}
@@ -140,16 +127,10 @@ function receivedMessage(event) {
 	var messageId = message.mid;
 	var appId = message.app_id;
 	var metadata = message.metadata;
-
 	// You may get a text or attachment but not both
 	var messageText = message.text;
 	var messageAttachments = message.attachments;
 	var quickReply = message.quick_reply;
-
-
-
-
-
 
 function greetUserText(userId) {
 	//first read user firstname
@@ -176,7 +157,6 @@ function greetUserText(userId) {
 		} else {
 			console.error(response.error);
 		}
-
 	});
 }
 
@@ -211,8 +191,6 @@ function callSendAPI(messageData) {
 		}
 	});
 }
-
-
 
 /*
  * Postback Event
